@@ -25,11 +25,17 @@ class CustomerController extends Controller
         $filterItems = $filter->transform($request); //[['column', 'operator', 'value']]
 
         $includeInvoices = $request->query('includeInvoices');
+        $includeGoods = $request->query('includeGoods');
+
 
         $customers = Customer::where($filterItems);
         
         if ($includeInvoices) {
             $customers = $customers->with('invoices');
+        }
+
+        if($includeGoods){
+            $customers = $customers->with('goods');
         }
 
         return new CustomerCollection($customers->paginate()->appends($request->query()));
@@ -60,7 +66,9 @@ class CustomerController extends Controller
 
         if ($includeInvoices) {
             return new CustomerResource($customer->loadMissing('invoices'));
-        } else if($includeGoods){
+        } 
+        
+        if($includeGoods){
             return new CustomerResource($customer->loadMissing('goods'));
         }
 

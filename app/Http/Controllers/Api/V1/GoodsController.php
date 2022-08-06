@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Goods;
-use App\Http\Requests\StoreGoodsRequest;
-use App\Http\Requests\UpdateGoodsRequest;
-use App\Filters\V1\GoodsFilter;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GoodsCollection;
 use App\Http\Resources\V1\GoodsResource;
-
+use App\Filters\V1\GoodsFilter;
+use App\Http\Requests\StoreGoodsRequest;
+use App\Http\Requests\UpdateGoodsRequest;
+use Illuminate\Support\Arr;
+use App\Http\Requests\V1\BulkStoreGoodsRequest;
 
 class GoodsController extends Controller
 {
@@ -17,7 +21,7 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $filter = new GoodsFilter();
         $queryItems = $filter->transform($request); //[['column', 'operator', 'value']]
@@ -25,21 +29,11 @@ class GoodsController extends Controller
         if (count($queryItems) == 0) {
             return new GoodsCollection(Goods::paginate());
         } else {
-            $goods = Invoice::where($queryItems)->paginate();
+            $goods = Goods::where($queryItems)->paginate();
 
             return new GoodsCollection($goods->appends($request->query()));
 
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -50,8 +44,17 @@ class GoodsController extends Controller
      */
     public function store(StoreGoodsRequest $request)
     {
-        //
+        return new GoodsResource(Goods::create($request->all()));
     }
+
+    public function bulkStore(BulkStoreGoodsRequest $request){
+        $bulk = collect($request->all())->map(function($arr, $key) {
+          return Arr::except($arr, ['customerId', 'registedDate', 'updateDate']);
+      });
+
+      Goods::insert($bulk->toArray());
+    }
+
 
     /**
      * Display the specified resource.
@@ -84,7 +87,8 @@ class GoodsController extends Controller
      */
     public function update(UpdateGoodsRequest $request, Goods $goods)
     {
-        //
+        // update Goods Information with PUT method.
+        $goods->update($request->all());
     }
 
     /**
