@@ -55,9 +55,13 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         $includeInvoices = request()->query('includeInvoices');
+        $includeGoods = request()->query('includeGoods');
+      
 
         if ($includeInvoices) {
             return new CustomerResource($customer->loadMissing('invoices'));
+        } else if($includeGoods){
+            return new CustomerResource($customer->loadMissing('goods'));
         }
 
         return new CustomerResource($customer);
