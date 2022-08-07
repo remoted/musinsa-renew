@@ -62,3 +62,56 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## API Routes list
+
++--------+-----------+-----------------------------+-------------------+------------------------------------------------------------+------------------------------------------+
+| Domain | Method    | URI                         | Name              | Action                                                     | Middleware                               |
++--------+-----------+-----------------------------+-------------------+------------------------------------------------------------+------------------------------------------+
+|        | GET|HEAD  | /                           |                   | Closure                                                    | web                                      |
+|        | GET|HEAD  | api/user                    |                   | Closure                                                    | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/customers            | customers.index   | App\Http\Controllers\Api\V1\CustomerController@index       | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | POST      | api/v1/customers            | customers.store   | App\Http\Controllers\Api\V1\CustomerController@store       | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/customers/{customer} | customers.show    | App\Http\Controllers\Api\V1\CustomerController@show        | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | PUT|PATCH | api/v1/customers/{customer} | customers.update  | App\Http\Controllers\Api\V1\CustomerController@update      | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | DELETE    | api/v1/customers/{customer} | customers.destroy | App\Http\Controllers\Api\V1\CustomerController@destroy     | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/goods                | goods.index       | App\Http\Controllers\Api\V1\GoodsController@index          | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | POST      | api/v1/goods                | goods.store       | App\Http\Controllers\Api\V1\GoodsController@store          | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | POST      | api/v1/goods/bulk           |                   | App\Http\Controllers\Api\V1\GoodsController@bulkStore      | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/goods/{good}         | goods.show        | App\Http\Controllers\Api\V1\GoodsController@show           | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | PUT|PATCH | api/v1/goods/{good}         | goods.update      | App\Http\Controllers\Api\V1\GoodsController@update         | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | DELETE    | api/v1/goods/{good}         | goods.destroy     | App\Http\Controllers\Api\V1\GoodsController@destroy        | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/invoices             | invoices.index    | App\Http\Controllers\Api\V1\InvoiceController@index        | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | POST      | api/v1/invoices             | invoices.store    | App\Http\Controllers\Api\V1\InvoiceController@store        | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | POST      | api/v1/invoices/bulk        |                   | App\Http\Controllers\Api\V1\InvoiceController@bulkStore    | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | api/v1/invoices/{invoice}   | invoices.show     | App\Http\Controllers\Api\V1\InvoiceController@show         | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | PUT|PATCH | api/v1/invoices/{invoice}   | invoices.update   | App\Http\Controllers\Api\V1\InvoiceController@update       | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | DELETE    | api/v1/invoices/{invoice}   | invoices.destroy  | App\Http\Controllers\Api\V1\InvoiceController@destroy      | api                                      |
+|        |           |                             |                   |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | sanctum/csrf-cookie         |                   | Laravel\Sanctum\Http\Controllers\CsrfCookieController@show | web                                      |
+|        | GET|HEAD  | setup                       |                   | Closure                                                    | web                                      |
++--------+-----------+-----------------------------+-------------------+------------------------------------------------------------+------------------------------------------+
+
+
+## How to get API key for authentication
+
+해당 프로젝트는 인증을 위해서 sanctum 을 사용하였습니다. 사용을 위해서는 route 단계에서 아래와 같이 입력여 먼저 실행해주세요
+<code>localhost:8000/api/v1/setup</code>
