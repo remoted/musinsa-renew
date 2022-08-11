@@ -26,6 +26,7 @@ return array(
     'App\\Http\\Requests\\V1\\BulkStoreInvoiceRequest' => $baseDir . '/app/Http/Requests/V1/BulkStoreInvoiceRequest.php',
     'App\\Http\\Requests\\V1\\StoreCustomerRequest' => $baseDir . '/app/Http/Requests/V1/StoreCustomerRequest.php',
     'App\\Http\\Requests\\V1\\UpdateCustomerRequest' => $baseDir . '/app/Http/Requests/V1/UpdateCustomerRequest.php',
+    'App\\Http\\Requests\\V1\\UpdateGoodsRequest' => $baseDir . '/app/Http/Requests/V1/UpdateGoodsRequest.php',
     'App\\Http\\Resources\\V1\\CustomerCollection' => $baseDir . '/app/Http/Resources/V1/CustomerCollection.php',
     'App\\Http\\Resources\\V1\\CustomerResource' => $baseDir . '/app/Http/Resources/V1/CustomerResource.php',
     'App\\Http\\Resources\\V1\\InvoiceCollection' => $baseDir . '/app/Http/Resources/V1/InvoiceCollection.php',

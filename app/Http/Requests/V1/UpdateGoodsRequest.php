@@ -66,4 +66,5 @@ class UpdateGoodsRequest extends FormRequest
           ]);
       }
     }
+    
 }

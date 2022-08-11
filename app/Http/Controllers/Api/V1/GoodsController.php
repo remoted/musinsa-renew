@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GoodsCollection;
 use App\Http\Resources\V1\GoodsResource;
 use App\Filters\V1\GoodsFilter;
-use App\Http\Requests\StoreGoodsRequest;
-use App\Http\Requests\UpdateGoodsRequest;
+use App\Http\Requests\V1\StoreGoodsRequest;
+use App\Http\Requests\V1\UpdateGoodsRequest;
 use Illuminate\Support\Arr;
 use App\Http\Requests\V1\BulkStoreGoodsRequest;
 
@@ -47,10 +47,11 @@ class GoodsController extends Controller
         return new GoodsResource(Goods::create($request->all()));
     }
 
+    
     public function bulkStore(BulkStoreGoodsRequest $request){
         $bulk = collect($request->all())->map(function($arr, $key) {
           return Arr::except($arr, ['customerId', 'registedDate', 'updateDate']);
-      });
+        });
 
       Goods::insert($bulk->toArray());
     }
@@ -67,16 +68,6 @@ class GoodsController extends Controller
         return new GoodsResource($goods);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Goods  $goods
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Goods $goods)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
