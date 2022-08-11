@@ -76,10 +76,20 @@ class GoodsController extends Controller
      * @param  \App\Models\Goods  $goods
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGoodsRequest $request, Goods $goods)
-    {
-        // update Goods Information with PUT method.
-        $goods->update($request->all());
+
+
+    public function update(Request $request, $id){
+
+      $goods = Goods::find($id);
+      $goods->name = $request->name;
+      $goods->comment = $request->comment;
+      $goods->customer_id = $request->customerId;
+      $goods->registed_date = $request->registedDate;
+      $goods->update_date = $request->updateDate;
+
+      $goods->save();
+
+      return response()->json($goods);
     }
 
     /**
@@ -88,8 +98,11 @@ class GoodsController extends Controller
      * @param  \App\Models\Goods  $goods
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Goods $goods)
+    public function destroy($id)
     {
-        //
+      $goods = Goods::find($id);
+      $goods->delete();
+      
+      return response()->json("Goods removed successfully.");
     }
 }
